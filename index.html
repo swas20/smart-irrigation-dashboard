@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Irrigation Control</title>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0b1120; color: #e2e8f0; padding: 20px; }
+  .container { max-width: 1400px; margin: 0 auto; }
+    h1 { text-align: center; color: #38bdf8; margin-bottom: 8px; font-size: 28px; }
+  .subtitle { text-align: center; color: #64748b; margin-bottom: 20px; font-size: 14px; }
+  .status { text-align: center; margin-bottom: 20px; padding: 10px; border-radius: 8px; background: #1e293b; font-weight: 600; }
+  .status.connected { border: 2px solid #22c55e; color: #22c55e; }
+  .status.disconnected { border: 2px solid #ef4444; color: #ef4444; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; }
+  .card { background: #1e293b; border-radius: 16px; padding: 20px; border: 3px solid #334155; transition: all 0.3s; }
+  .card.valve-open { border-color: #22c55e; box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+  .card.valve-closed { border-color: #ef4444; }
+  .card h2 { margin-bottom: 15px; color: #7dd3fc; display: flex; justify-content: space-between; align-items: center; font-size: 20px; }
+  .badge { padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+  .badge.online { background: #166534; color: #bbf7d0; }
+  .badge.offline { background: #7f1d1d; color: #fecaca; }
+  .valve-status { padding: 14px; border-radius: 10px; font-weight: 700; text-align: center; margin: 15px 0; font-size: 20px; letter-spacing: 1px; }
+  .valve-status.open { background: #166534; color: #bbf7d0; }
+  .valve-status.closed { background: #7f1d1d; color: #fecaca; }
+  .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+  .sensor { background: #0f172a; padding: 12px; border-radius: 8px; text-align: center; }
+  .sensor.label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sensor.value { font-size: 24px; font-weight: 700; color: #e2e8f0; margin: 4px 0; }
+  .sensor.unit { font-size: 11px; color: #64748b; }
+  .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 18px; }
+    button { padding: 13px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.2s; }
+    button:active { transform: scale(0.96); }
+    button.btn-open { background: #22c55e; color: white; }
+    button.btn-close { background: #ef4444; color: white; }
+    button.btn-reset { background: #f59e0b; color: white; }
+    button:hover { opacity: 0.9; }
+  .meta { font-size: 11px; color: #64748b; text-align: right; margin-top: 12px; display: flex; justify-content: space-between; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Smart Irrigation System</h1>
+    <div class="subtitle">Master LoRa → 3 Receivers | GitHub Pages + MQTT</div>
+    <div id="connStatus" class="status disconnected">MQTT: Connecting to broker...</div>
+    <div class="grid" id="customers"></div>
+  </div>
+
+  <script>
+    // MQTT Broker - public HiveMQ WebSocket
+    const BROKER = 'wss://broker.hivemq.com:8884/mqtt';
+    const TOPIC_CMD = 'irrigation/cmd';
+    const TOPIC_DATA = 'irrigation/data/+'; // + = wildcard for all customers
+
+    const client = mqtt.connect(BROKER, {
+      clientId: 'dashboard_' + Math.random().toString(16).substr(2, 8),
+      clean: true,
+      reconnectPeriod: 5000
+    });
+
+    const state = { 1: {}, 2: {}, 3: {} };
+    const connStatus = document.getElementById('connStatus');
+    const customersDiv = document.getElementById('customers');
+
+    // Build UI for 3 customers
+    for (let i = 1; i <= 3; i++) {
+      customersDiv.innerHTML += `
+        <div class="card valve-closed" id="customer-${i}">
+          <h2>Customer ${i} <span class="badge offline" id="status-${i}">OFFLINE</span></h2>
+          <div class="valve-status closed" id="valve-${i}">CLOSED</div>
+          <div class="sensor-grid">
+            <div class="sensor"><div class="label">Temperature</div><div class="value" id="temp-${i}">--</div><div class="unit">°C</div></div>
+            <div class="sensor"><div class="label">Humidity</div><div class="value" id="hum-${i}">--</div><div class="unit">%</div></div>
+            <div class="sensor"><div class="label">Moisture 1</div><div class="value" id="moist1-${i}">--</div><div class="unit">%</div></div>
+            <div class="sensor"><div class="label">Moisture 2</div><div class="value" id="moist2-${i}">--</div><div class="unit">%</div></div>
+            <div class="sensor"><div class="label">Flow Rate</div><div class="value" id="flow-${i}">--</div><div class="unit">L/min</div></div>
+            <div class="sensor"><div class="label">Total Water</div><div class="value" id="total-${i}">--</div><div class="unit">Liters</div></div>
+          </div>
+          <div class="btn-group">
+            <button class="btn-open" onclick="sendCmd(${i}, 'open')">Open Valve</button>
+            <button class="btn-close" onclick="sendCmd(${i}, 'close')">Close Valve</button>
+            <button class="btn-reset" onclick="sendCmd(${i}, 'reset')">Reset Total</button>
+          </div>
+          <div class="meta">
+            <span>RSSI: <span id="rssi-${i}">--</span> dBm</span>
+            <span>Updated: <span id="last-${i}">Never</span></span>
+          </div>
+        </div>
+      `;
+    }
+
+    client.on('connect', () => {
+      connStatus.textContent = 'MQTT: Connected to broker.hivemq.com';
+      connStatus.className = 'status connected';
+      client.subscribe(TOPIC_DATA);
+    });
+
+    client.on('reconnect', () => {
+      connStatus.textContent = 'MQTT: Reconnecting...';
+      connStatus.className = 'status disconnected';
+    });
+
+    client.on('error', () => {
+      connStatus.textContent = 'MQTT: Connection Error';
+      connStatus.className = 'status disconnected';
+    });
+
+    client.on('message', (topic, payload) => {
+      try {
+        const data = JSON.parse(payload.toString());
+        const id = data.id;
+        if (!id || id < 1 || id > 3) return;
+
+        state[id] = {...state[id],...data, lastSeen: Date.now() };
+        updateUI(id);
+      } catch (e) { console.error('Parse error:', e); }
+    });
+
+    function sendCmd(customerId, action) {
+      const msg = JSON.stringify({ id: customerId, cmd: action, ts: Date.now() });
+      client.publish(TOPIC_CMD, msg);
+
+      // Optimistic UI update
+      if (action === 'open') state[customerId].valve = 1;
+      if (action === 'close') state[customerId].valve = 0;
+      if (action === 'reset') state[customerId].total = 0;
+      updateUI(customerId);
+    }
+
+    function updateUI(id) {
+      const s = state[id];
+      if (!s) return;
+
+      // Online check: 20s timeout
+      const online = Date.now() - (s.lastSeen || 0) < 20000;
+      document.getElementById(`status-${id}`).textContent = online? 'ONLINE' : 'OFFLINE';
+      document.getElementById(`status-${id}`).className = online? 'badge online' : 'badge offline';
+
+      // Valve status
+      const card = document.getElementById(`customer-${id}`);
+      const valveEl = document.getElementById(`valve-${id}`);
+      if (s.valve === 1) {
+        card.className = 'card valve-open';
+        valveEl.textContent = 'OPEN';
+        valveEl.className = 'valve-status open';
+      } else {
+        card.className = 'card valve-closed';
+        valveEl.textContent = 'CLOSED';
+        valveEl.className = 'valve-status closed';
+      }
+
+      // Sensors
+      document.getElementById(`temp-${id}`).textContent = s.temp?.toFixed(1)?? '--';
+      document.getElementById(`hum-${id}`).textContent = s.hum?.toFixed(0)?? '--';
+      document.getElementById(`moist1-${id}`).textContent = s.moist1?.toFixed(0)?? '--';
+      document.getElementById(`moist2-${id}`).textContent = s.moist2?.toFixed(0)?? '--';
+      document.getElementById(`flow-${id}`).textContent = s.flow?.toFixed(2)?? '--';
+      document.getElementById(`total-${id}`).textContent = s.total?.toFixed(1)?? '--';
+      document.getElementById(`rssi-${id}`).textContent = s.rssi?? '--';
+
+      if (s.lastSeen) {
+        const sec = Math.floor((Date.now() - s.lastSeen) / 1000);
+        document.getElementById(`last-${id}`).textContent = sec < 60? `${sec}s ago` : `${Math.floor(sec/60)}m ago`;
+      }
+    }
+
+    // Update "last seen" every 2s
+    setInterval(() => {
+      for (let i = 1; i <= 3; i++) updateUI(i);
+    }, 2000);
+  </script>
+</body>
+  </html>
