@@ -60,7 +60,7 @@
       reconnectPeriod: 5000
     });
 
-    const state = { 1: {}, 2: {}, 3: {} };
+    const state = {};
     const connStatus = document.getElementById('connStatus');
     const customersDiv = document.getElementById('customers');
 
@@ -111,10 +111,20 @@
       try {
         const data = JSON.parse(payload.toString());
         const id = data.id;
-        if (!id || id < 1 || id > 3) return;
+        if (!id) return;
 
-        state[id] = {...state[id],...data, lastSeen: Date.now() };
-        updateUI(id);
+if (!state[id]) {
+    state[id] = {};
+    createCustomerCard(id);
+}
+
+state[id] = {
+    ...state[id],
+    ...data,
+    lastSeen: Date.now()
+};
+
+updateUI(id);
       } catch (e) { console.error('Parse error:', e); }
     });
 
@@ -132,6 +142,83 @@
     function updateUI(id) {
       const s = state[id];
       if (!s) return;
+
+      function createCustomerCard(id) {
+    customersDiv.innerHTML += `
+    <div class="card valve-closed" id="customer-${id}">
+      <h2>Node ${id}
+        <span class="badge offline" id="status-${id}">OFFLINE</span>
+      </h2>
+
+      <div class="valve-status closed" id="valve-${id}">
+        CLOSED
+      </div>
+
+      <div class="sensor-grid">
+        <div class="sensor">
+          <div class="label">Temperature</div>
+          <div class="value" id="temp-${id}">--</div>
+          <div class="unit">°C</div>
+        </div>
+
+        <div class="sensor">
+          <div class="label">Humidity</div>
+          <div class="value" id="hum-${id}">--</div>
+          <div class="unit">%</div>
+        </div>
+
+        <div class="sensor">
+          <div class="label">Moisture 1</div>
+          <div class="value" id="moist1-${id}">--</div>
+          <div class="unit">%</div>
+        </div>
+
+        <div class="sensor">
+          <div class="label">Moisture 2</div>
+          <div class="value" id="moist2-${id}">--</div>
+          <div class="unit">%</div>
+        </div>
+
+        <div class="sensor">
+          <div class="label">Flow Rate</div>
+          <div class="value" id="flow-${id}">--</div>
+          <div class="unit">L/min</div>
+        </div>
+
+        <div class="sensor">
+          <div class="label">Total Water</div>
+          <div class="value" id="total-${id}">--</div>
+          <div class="unit">Liters</div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-open" onclick="sendCmd(${id},'open')">Open</button>
+        <button class="btn-close" onclick="sendCmd(${id},'close')">Close</button>
+        <button class="btn-reset" onclick="sendCmd(${id},'reset')">Reset</button>
+      </div>
+
+      <div class="meta">
+        <span>RSSI:
+          <span id="rssi-${id}">--</span>
+        </span>
+
+        <span>
+          Updated:
+          <span id="last-${id}">Never</span>
+        </span>
+      </div>
+    </div>
+    `;
+      }
+
+      const password = prompt("Enter Dashboard Password");
+
+if (password !== "irrigation2026") {
+    document.body.innerHTML =
+        "<h1 style='color:red;text-align:center;margin-top:100px;'>Access Denied</h1>";
+    throw new Error("Unauthorized");
+}
 
       // Online check: 20s timeout
       const online = Date.now() - (s.lastSeen || 0) < 20000;
