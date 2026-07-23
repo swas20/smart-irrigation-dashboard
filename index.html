@@ -8,86 +8,78 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0b1120; color: #e2e8f0; padding: 20px; }
-  .container { max-width: 1450px; margin: 0 auto; }
+ .container { max-width: 1450px; margin: 0 auto; }
     h1 { text-align: center; color: #38bdf8; margin-bottom: 8px; font-size: 28px; }
-  .subtitle { text-align: center; color: #64748b; margin-bottom: 20px; font-size: 14px; }
-  .header-bar { display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; flex-wrap: wrap; gap:10px; }
-  .status { text-align: center; padding: 8px 12px; border-radius: 8px; background: #0f172a; font-weight: 700; font-size: 12px; }
-  .status.connected { border: 2px solid #22c55e; color: #22c55e; }
-  .status.disconnected { border: 2px solid #ef4444; color: #ef4444; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
-  .card { background: #1e293b; border-radius: 16px; padding: 20px; border: 3px solid #334155; transition: all 0.3s; }
-  .card.valve-open { border-color: #22c55e; box-shadow: 0 0 25px rgba(34, 197, 94, 0.25); }
-  .card.valve-closed { border-color: #334155; }
-  .card h2 { margin-bottom: 15px; color: #7dd3fc; display: flex; justify-content: space-between; align-items: center; font-size: 20px; }
-  .badge { padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-  .badge.online { background: #166534; color: #bbf7d0; }
-  .badge.offline { background: #7f1d1d; color: #fecaca; }
-  .valve-status { padding: 14px; border-radius: 10px; font-weight: 800; text-align: center; margin: 10px 0; font-size: 20px; }
-  .valve-status.open { background: #166534; color: #bbf7d0; }
-  .valve-status.closed { background: #7f1d1d; color: #fecaca; }
-  .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
-  .sensor { background: #0f172a; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #1e293b; }
-  .sensor.label { font-size: 10px; color: #94a3b8; text-transform: uppercase; }
-  .sensor.value { font-size: 26px; font-weight: 800; color: #e2e8f0; margin: 4px 0; }
-  .sensor.unit { font-size: 11px; color: #64748b; }
-  .controls { background: #0f172a; border-radius: 12px; padding: 15px; margin-top: 15px; }
-  .controls h3 { font-size: 13px; color: #38bdf8; margin-bottom: 12px; text-transform: uppercase; }
-  .control-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-  .control-item { display: flex; flex-direction: column; gap: 5px; }
-  .control-item label { font-size: 11px; color: #94a3b8; }
-  .control-item input { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 8px; color: white; outline: none; }
-  .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+ .subtitle { text-align: center; color: #64748b; margin-bottom: 20px; font-size: 14px; }
+ .header-bar { display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; flex-wrap: wrap; gap:10px; }
+ .status { text-align: center; padding: 8px 12px; border-radius: 8px; background: #0f172a; font-weight: 700; font-size: 12px; }
+ .status.connected { border: 2px solid #22c55e; color: #22c55e; }
+ .status.disconnected { border: 2px solid #ef4444; color: #ef4444; }
+ .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
+ .card { background: #1e293b; border-radius: 16px; padding: 20px; border: 3px solid #334155; transition: all 0.3s; }
+ .card.valve-open { border-color: #22c55e; box-shadow: 0 0 25px rgba(34, 197, 94, 0.25); }
+ .card.valve-closed { border-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.15); }
+ .card h2 { margin-bottom: 15px; color: #7dd3fc; display: flex; justify-content: space-between; align-items: center; font-size: 20px; }
+ .badge { padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+ .badge.online { background: #166534; color: #bbf7d0; }
+ .badge.offline { background: #7f1d1d; color: #fecaca; }
+ .valve-status { padding: 14px; border-radius: 10px; font-weight: 800; text-align: center; margin: 10px 0; font-size: 20px; transition: all 0.2s; }
+ .valve-status.open { background: #166534; color: #bbf7d0; border: 2px solid #22c55e; }
+ .valve-status.closed { background: #7f1d1d; color: #fecaca; border: 2px solid #ef4444; }
+ .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
+ .sensor { background: #0f172a; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #1e293b; }
+ .sensor.label { font-size: 10px; color: #94a3b8; text-transform: uppercase; }
+ .sensor.value { font-size: 26px; font-weight: 800; color: #e2e8f0; margin: 4px 0; }
+ .sensor.unit { font-size: 11px; color: #64748b; }
+ .controls { background: #0f172a; border-radius: 12px; padding: 15px; margin-top: 15px; }
+ .controls h3 { font-size: 13px; color: #38bdf8; margin-bottom: 12px; text-transform: uppercase; }
+ .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
     button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.2s; }
-    button.btn-open { background: #22c55e; color: white; }
-    button.btn-close { background: #ef4444; color: white; }
+    button.btn-open { background: #1a4d2e; color: #86efac; border: 1px solid #166534; }
+    button.btn-open.active { background: #22c55e; color: white; box-shadow: 0 0 15px rgba(34,197,94,0.5); transform: scale(1.03); }
+    button.btn-close { background: #4c1d1d; color: #fca5a5; border: 1px solid #7f1d1d; }
+    button.btn-close.active { background: #ef4444; color: white; box-shadow: 0 0 15px rgba(239,68,68,0.5); transform: scale(1.03); }
     button.btn-reset { background: #f59e0b; color: white; }
     button.btn-save { background: #38bdf8; color: #0b1120; }
     button.btn-auto { background: #334155; color: white; }
     button.btn-auto.active { background: #38bdf8; color: #0b1120; }
 
-    /* LOGIN - MUST ENTER EVERY TIME */
     #loginOverlay { position: fixed; inset: 0; background: #0b1120; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-  .login-box { background: #1e293b; padding: 35px; border-radius: 16px; width: 100%; max-width: 400px; border: 1px solid #334155; text-align: center; }
-  .login-box h2 { color: #38bdf8; margin-bottom: 5px; }
-  .login-box p { color: #64748b; font-size: 13px; margin-bottom: 20px; }
-  .login-box input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; }
-  .input-group { margin-bottom: 15px; text-align: left; }
-  .password-wrap { position: relative; display: flex; align-items: center; }
-  .password-wrap input { padding-right: 45px; }
-  .toggle-eye { position: absolute; right: 10px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px; }
-  .toggle-eye:hover { color: #38bdf8; }
+ .login-box { background: #1e293b; padding: 35px; border-radius: 16px; width: 100%; max-width: 400px; border: 1px solid #334155; text-align: center; }
+ .login-box h2 { color: #38bdf8; margin-bottom: 5px; }
+ .login-box p { color: #64748b; font-size: 13px; margin-bottom: 20px; }
+ .login-box input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; }
+ .input-group { margin-bottom: 15px; text-align: left; }
+ .password-wrap { position: relative; display: flex; align-items: center; }
+ .password-wrap input { padding-right: 45px; }
+ .toggle-eye { position: absolute; right: 10px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px; }
+ .toggle-eye:hover { color: #38bdf8; }
     #loginError { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; background: #7f1d1d33; padding: 8px; border-radius: 6px; }
-    #emptyMsg { text-align: center; color: #94a3b8; margin-top: 60px; grid-column: 1 / -1; background: #1e293b; padding: 30px; border-radius: 12px; border: 2px dashed #334155; font-size: 18px; }
-  .user-info { font-size: 13px; color: #94a3b8; }
-  .user-info strong { color: #38bdf8; }
-  .meta { font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 12px; }
+    #emptyMsg { text-align: center; color: #94a3b8; grid-column: 1 / -1; background: #1e293b; padding: 40px 30px; border-radius: 12px; border: 2px dashed #334155; font-size: 18px; line-height: 1.6; }
+ .user-info { font-size: 13px; color: #94a3b8; }
+ .user-info strong { color: #38bdf8; }
+ .meta { font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 12px; }
   </style>
 </head>
 <body>
-  <!-- LOGIN SCREEN - ALWAYS SHOWS FIRST -->
   <div id="loginOverlay">
     <div class="login-box">
       <h2 style="letter-spacing:1px;">AQUASENSE</h2>
       <p>Enter Account Name & Password to access dashboard</p>
-
       <div class="input-group">
         <input type="text" id="usernameInput" placeholder="Account Name" autocomplete="username" />
       </div>
-
       <div class="input-group">
         <div class="password-wrap">
           <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password" />
           <button type="button" class="toggle-eye" id="toggleEye" onclick="togglePassword()">👁️</button>
         </div>
       </div>
-
       <button style="width:100%; background:#38bdf8; color:#0b1120;" onclick="checkLogin()">Login to Dashboard</button>
       <div id="loginError"></div>
     </div>
   </div>
 
-  <!-- DASHBOARD - HIDDEN UNTIL LOGIN -->
   <div class="container" id="mainContainer" style="display:none;">
     <h1>AquaSense</h1>
     <div class="subtitle">Smart Irrigation System | LoRa Master → Auto Nodes</div>
@@ -97,9 +89,8 @@
         <div id="connStatus" class="status disconnected">Connecting...</div>
         <button style="background:#334155; color:white; padding:6px 12px; font-size:12px;" onclick="logout()">Logout</button>
       </div>
-    </div>
     <div class="grid" id="customers">
-      <div id="emptyMsg">⏳ Waiting for node to come online...<br><span style="font-size:13px; color:#64748b;">Publishing to irrigation/data/[id]</span></div>
+      <div id="emptyMsg">⏳ Waiting for nodes to come online...<br><span style="font-size:13px; color:#64748b;">No active nodes detected. Publishing to irrigation/data/[id]</span></div>
     </div>
   </div>
 
@@ -108,34 +99,22 @@
   const TOPIC_CMD = 'irrigation/cmd';
   const TOPIC_DATA = 'irrigation/data/+';
 
-  // CHANGE YOUR LOGIN HERE
   const DASHBOARD_NAME = "aquasense";
   const DASHBOARD_PASSWORD = "irrigation2026";
 
   function togglePassword(){
     const input = document.getElementById('passwordInput');
     const eye = document.getElementById('toggleEye');
-    if(input.type === 'password'){
-      input.type = 'text';
-      eye.textContent = '🙈';
-    } else {
-      input.type = 'password';
-      eye.textContent = '👁️';
-    }
+    if(input.type === 'password'){ input.type = 'text'; eye.textContent = '🙈'; }
+    else { input.type = 'password'; eye.textContent = '👁️'; }
   }
 
   function checkLogin(){
     const u = document.getElementById('usernameInput').value.trim().toLowerCase();
     const p = document.getElementById('passwordInput').value.trim();
     const err = document.getElementById('loginError');
-
-    if(!u ||!p){
-      err.textContent="Please enter account name and password";
-      err.style.display='block';
-      return;
-    }
+    if(!u ||!p){ err.textContent="Please enter account name and password"; err.style.display='block'; return; }
     if(u === DASHBOARD_NAME && p === DASHBOARD_PASSWORD){
-      // SUCCESS - NO localStorage, so login required next time
       err.style.display='none';
       document.getElementById('loginOverlay').style.display='none';
       document.getElementById('mainContainer').style.display='block';
@@ -157,7 +136,6 @@
     document.getElementById('toggleEye').textContent='👁️';
   }
 
-  // Enter key to login
   document.getElementById('passwordInput')?.addEventListener('keypress', e=>{ if(e.key==='Enter') checkLogin(); });
   document.getElementById('usernameInput')?.addEventListener('keypress', e=>{ if(e.key==='Enter') checkLogin(); });
 
@@ -169,17 +147,23 @@
   function isAnyNodeOnline(){
     return Object.values(state).some(s => (Date.now() - (s.lastSeen || 0)) < 20000);
   }
+
   function updateEmptyState(){
     const emptyEl = document.getElementById('emptyMsg');
     if(!emptyEl) return;
     const hasNodes = Object.keys(state).length > 0;
     const hasOnline = isAnyNodeOnline();
+
+    // REQUIREMENT: when nodes are connected -> hide waiting message
+    // when nodes not there -> say waiting for nodes to come online
     if(!hasNodes ||!hasOnline){
       emptyEl.style.display = 'block';
+      emptyEl.innerHTML = `⏳ Waiting for nodes to come online...<br><span style="font-size:13px; color:#64748b;">No active nodes detected. Publishing to irrigation/data/[id]</span>`;
     } else {
       emptyEl.style.display = 'none';
     }
   }
+
   function initMQTT(){
     if(client) return;
     client = mqtt.connect(BROKER, { clientId: 'dashboard_'+Math.random().toString(16).substr(2,8), clean:true, reconnectPeriod:5000 });
@@ -214,37 +198,68 @@
         <div class="controls">
           <h3>Valve Control</h3>
           <div class="btn-group">
-            <button class="btn-open" onclick="sendCmd(${id}, 'open')">Open Valve</button>
-            <button class="btn-close" onclick="sendCmd(${id}, 'close')">Close Valve</button>
+            <button class="btn-open" id="btn-open-${id}" onclick="sendCmd(${id}, 'open')">Open Valve</button>
+            <button class="btn-close active" id="btn-close-${id}" onclick="sendCmd(${id}, 'close')">Close Valve</button>
             <button class="btn-auto" id="auto-${id}" onclick="toggleAuto(${id})">Auto: OFF</button>
           </div>
-        </div>
         <div class="meta"><span>RSSI: <span id="rssi-${id}">--</span> dBm</span><span>Updated: <span id="last-${id}">Never</span></span></div>
       </div>
     `);
+    updateEmptyState();
   }
 
   function sendCmd(id, action){
     if(!client ||!client.connected){ alert('MQTT not connected'); return; }
+
+    // INSTANT UI CHANGE - Requirement: green when open pressed, red when close pressed
+    if(!state[id]) state[id] = { lastSeen: Date.now() };
+    if(action === 'open') {
+      state[id].valve = 1;
+    } else if(action === 'close') {
+      state[id].valve = 0;
+    }
+    updateUI(id); // update immediately
+
     client.publish(TOPIC_CMD, JSON.stringify({ id: id, cmd: action, ts: Date.now() }));
   }
+
   function toggleAuto(id){
     if(!state[id]) state[id]={};
     state[id].auto =!state[id].auto;
     const btn = document.getElementById(`auto-${id}`);
     btn.textContent = state[id].auto? 'Auto: ON' : 'Auto: OFF';
     btn.className = state[id].auto? 'btn-auto active' : 'btn-auto';
-    client.publish(TOPIC_CMD, JSON.stringify({ id: id, cmd: 'auto', value: state[id].auto?1:0 }));
+    if(client && client.connected){
+      client.publish(TOPIC_CMD, JSON.stringify({ id: id, cmd: 'auto', value: state[id].auto?1:0 }));
+    }
   }
+
   function updateUI(id){
     const s = state[id]; if(!s ||!document.getElementById(`customer-${id}`)) return;
     const online = Date.now() - (s.lastSeen||0) < 20000;
+
     document.getElementById(`status-${id}`).textContent = online?'ONLINE':'OFFLINE';
     document.getElementById(`status-${id}`).className = online?'badge online':'badge offline';
+
     const card = document.getElementById(`customer-${id}`);
     const valveEl = document.getElementById(`valve-${id}`);
-    if(s.valve===1){ card.className='card valve-open'; valveEl.textContent='OPEN'; valveEl.className='valve-status open'; }
-    else { card.className='card valve-closed'; valveEl.textContent='CLOSED'; valveEl.className='valve-status closed'; }
+    const btnOpen = document.getElementById(`btn-open-${id}`);
+    const btnClose = document.getElementById(`btn-close-${id}`);
+
+    if(s.valve===1){
+      card.className='card valve-open';
+      valveEl.textContent='OPEN';
+      valveEl.className='valve-status open';
+      if(btnOpen) btnOpen.className='btn-open active';
+      if(btnClose) btnClose.className='btn-close';
+    } else {
+      card.className='card valve-closed';
+      valveEl.textContent='CLOSED';
+      valveEl.className='valve-status closed';
+      if(btnOpen) btnOpen.className='btn-open';
+      if(btnClose) btnClose.className='btn-close active';
+    }
+
     document.getElementById(`temp-${id}`).textContent = s.temp?.toFixed(1)??'--';
     document.getElementById(`hum-${id}`).textContent = s.hum?.toFixed(0)??'--';
     document.getElementById(`moist1-${id}`).textContent = s.moist1?.toFixed(0)??'--';
@@ -252,9 +267,14 @@
     document.getElementById(`flow-${id}`).textContent = s.flow?.toFixed(2)??'--';
     document.getElementById(`total-${id}`).textContent = s.total?.toFixed(1)??'--';
     document.getElementById(`rssi-${id}`).textContent = s.rssi??'--';
+    document.getElementById(`last-${id}`).textContent = s.lastSeen? new Date(s.lastSeen).toLocaleTimeString() : 'Never';
+
     updateEmptyState();
   }
+
   setInterval(()=>{ Object.keys(state).forEach(id=>updateUI(id)); updateEmptyState(); },2000);
+  // initial check
+  updateEmptyState();
 </script>
 </body>
 </html>
