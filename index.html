@@ -8,70 +8,64 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0b1120; color: #e2e8f0; padding: 20px; }
- .container { max-width: 1450px; margin: 0 auto; }
+   .container { max-width: 1450px; margin: 0 auto; }
     h1 { text-align: center; color: #38bdf8; margin-bottom: 8px; font-size: 28px; }
- .subtitle { text-align: center; color: #64748b; margin-bottom: 20px; font-size: 14px; }
- .header-bar { display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; flex-wrap: wrap; gap:10px; }
- .status { text-align: center; padding: 8px 12px; border-radius: 8px; background: #0f172a; font-weight: 700; font-size: 12px; }
- .status.connected { border: 2px solid #22c55e; color: #22c55e; }
- .status.disconnected { border: 2px solid #ef4444; color: #ef4444; }
- .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
- .card { background: #1e293b; border-radius: 16px; padding: 20px; border: 3px solid #334155; transition: all 0.3s; }
- .card.valve-open { border-color: #22c55e; box-shadow: 0 0 25px rgba(34, 197, 94, 0.25); }
- .card.valve-closed { border-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.15); }
- .card h2 { margin-bottom: 15px; color: #7dd3fc; display: flex; justify-content: space-between; align-items: center; font-size: 20px; }
- .badge { padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
- .badge.online { background: #166534; color: #bbf7d0; }
- .badge.offline { background: #7f1d1d; color: #fecaca; }
- .valve-status { padding: 14px; border-radius: 10px; font-weight: 800; text-align: center; margin: 10px 0; font-size: 20px; transition: all 0.2s; }
- .valve-status.open { background: #166534; color: #bbf7d0; border: 2px solid #22c55e; }
- .valve-status.closed { background: #7f1d1d; color: #fecaca; border: 2px solid #ef4444; }
- .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
- .sensor { background: #0f172a; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #1e293b; }
- .sensor.label { font-size: 10px; color: #94a3b8; text-transform: uppercase; }
- .sensor.value { font-size: 26px; font-weight: 800; color: #e2e8f0; margin: 4px 0; }
- .sensor.unit { font-size: 11px; color: #64748b; }
- .controls { background: #0f172a; border-radius: 12px; padding: 15px; margin-top: 15px; }
- .controls h3 { font-size: 13px; color: #38bdf8; margin-bottom: 12px; text-transform: uppercase; }
- .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+   .subtitle { text-align: center; color: #64748b; margin-bottom: 20px; font-size: 14px; }
+   .header-bar { display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; flex-wrap: wrap; gap:10px; }
+   .status { text-align: center; padding: 8px 12px; border-radius: 8px; background: #0f172a; font-weight: 700; font-size: 12px; }
+   .status.connected { border: 2px solid #22c55e; color: #22c55e; }
+   .status.disconnected { border: 2px solid #ef4444; color: #ef4444; }
+   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+   .card { background: #1e293b; border-radius: 16px; padding: 20px; border: 3px solid #334155; transition: all 0.3s; }
+   .card.valve-open { border-color: #22c55e; box-shadow: 0 0 25px rgba(34, 197, 94, 0.25); }
+   .card.valve-closed { border-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.15); }
+   .card h2 { margin-bottom: 15px; color: #7dd3fc; display: flex; justify-content: space-between; align-items: center; font-size: 20px; }
+   .badge { padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+   .badge.online { background: #166534; color: #bbf7d0; }
+   .badge.offline { background: #7f1d1d; color: #fecaca; }
+   .valve-status { padding: 14px; border-radius: 10px; font-weight: 800; text-align: center; margin: 10px 0; font-size: 20px; }
+   .valve-status.open { background: #166534; color: #bbf7d0; border: 2px solid #22c55e; }
+   .valve-status.closed { background: #7f1d1d; color: #fecaca; border: 2px solid #ef4444; }
+   .sensor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
+   .sensor { background: #0f172a; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #1e293b; }
+   .sensor.label { font-size: 10px; color: #94a3b8; text-transform: uppercase; display:block; }
+   .sensor.value { font-size: 26px; font-weight: 800; color: #e2e8f0; margin: 4px 0; }
+   .sensor.unit { font-size: 11px; color: #64748b; }
+   .controls { background: #0f172a; border-radius: 12px; padding: 15px; margin-top: 15px; }
+   .controls h3 { font-size: 13px; color: #38bdf8; margin-bottom: 12px; text-transform: uppercase; }
+   .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
     button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.2s; }
     button.btn-open { background: #1a4d2e; color: #86efac; border: 1px solid #166534; }
     button.btn-open.active { background: #22c55e; color: white; box-shadow: 0 0 15px rgba(34,197,94,0.5); transform: scale(1.03); }
     button.btn-close { background: #4c1d1d; color: #fca5a5; border: 1px solid #7f1d1d; }
     button.btn-close.active { background: #ef4444; color: white; box-shadow: 0 0 15px rgba(239,68,68,0.5); transform: scale(1.03); }
-    button.btn-reset { background: #f59e0b; color: white; }
-    button.btn-save { background: #38bdf8; color: #0b1120; }
     button.btn-auto { background: #334155; color: white; }
     button.btn-auto.active { background: #38bdf8; color: #0b1120; }
-
     #loginOverlay { position: fixed; inset: 0; background: #0b1120; z-index: 9999; display: flex; align-items: center; justify-content: center; }
- .login-box { background: #1e293b; padding: 35px; border-radius: 16px; width: 100%; max-width: 400px; border: 1px solid #334155; text-align: center; }
- .login-box h2 { color: #38bdf8; margin-bottom: 5px; }
- .login-box p { color: #64748b; font-size: 13px; margin-bottom: 20px; }
- .login-box input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; }
- .input-group { margin-bottom: 15px; text-align: left; }
- .password-wrap { position: relative; display: flex; align-items: center; }
- .password-wrap input { padding-right: 45px; }
- .toggle-eye { position: absolute; right: 10px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px; }
- .toggle-eye:hover { color: #38bdf8; }
+   .login-box { background: #1e293b; padding: 35px; border-radius: 16px; width: 100%; max-width: 400px; border: 1px solid #334155; text-align: center; }
+   .login-box h2 { color: #38bdf8; margin-bottom: 5px; }
+   .login-box p { color: #64748b; font-size: 13px; margin-bottom: 20px; }
+   .login-box input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; }
+   .input-group { margin-bottom: 15px; text-align: left; }
+   .password-wrap { position: relative; display: flex; align-items: center; }
+   .password-wrap input { padding-right: 45px; }
+   .toggle-eye { position: absolute; right: 10px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px; }
     #loginError { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; background: #7f1d1d33; padding: 8px; border-radius: 6px; }
     #emptyMsg { text-align: center; color: #94a3b8; grid-column: 1 / -1; background: #1e293b; padding: 40px 30px; border-radius: 12px; border: 2px dashed #334155; font-size: 18px; line-height: 1.6; }
- .user-info { font-size: 13px; color: #94a3b8; }
- .user-info strong { color: #38bdf8; }
- .meta { font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 12px; }
+   .user-info { font-size: 13px; color: #94a3b8; }
+   .user-info strong { color: #38bdf8; }
+   .meta { font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 12px; }
   </style>
 </head>
 <body>
   <div id="loginOverlay">
     <div class="login-box">
       <h2 style="letter-spacing:1px;">AQUASENSE</h2>
-      <p>Enter Account Name & Password to access dashboard</p>
-      <div class="input-group">
-        <input type="text" id="usernameInput" placeholder="Account Name" autocomplete="username" />
-      </div>
+      <p>Smart Irrigation System | LoRa Master</p>
+      <div class="input-group"><input type="text" id="usernameInput" placeholder="Account Name" /></div>
       <div class="input-group">
         <div class="password-wrap">
-          <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password" />
+          <input type="password" id="passwordInput" placeholder="Password" />
           <button type="button" class="toggle-eye" id="toggleEye" onclick="togglePassword()">👁️</button>
         </div>
       </div>
@@ -86,11 +80,13 @@
     <div class="header-bar">
       <div class="user-info">Logged in as: <strong id="displayUser">aquasense</strong></div>
       <div style="display:flex; gap:10px; align-items:center;">
-        <div id="connStatus" class="status disconnected">Connecting...</div>
+        <div id="connStatus" class="status disconnected">DISCONNECTED</div>
+        <div id="srcStatus" style="font-size:11px;color:#64748b"></div>
         <button style="background:#334155; color:white; padding:6px 12px; font-size:12px;" onclick="logout()">Logout</button>
       </div>
+    </div>
     <div class="grid" id="customers">
-      <div id="emptyMsg">⏳ Waiting for nodes to come online...<br><span style="font-size:13px; color:#64748b;">No active nodes detected. Publishing to irrigation/data/[id]</span></div>
+      <div id="emptyMsg">⏳ Waiting for nodes to come online...<br><span style="font-size:13px;">No active nodes detected</span></div>
     </div>
   </div>
 
@@ -98,87 +94,115 @@
   const BROKER = 'wss://broker.hivemq.com:8884/mqtt';
   const TOPIC_CMD = 'irrigation/cmd';
   const TOPIC_DATA = 'irrigation/data/+';
-
   const DASHBOARD_NAME = "aquasense";
   const DASHBOARD_PASSWORD = "irrigation2026";
 
   function togglePassword(){
     const input = document.getElementById('passwordInput');
     const eye = document.getElementById('toggleEye');
-    if(input.type === 'password'){ input.type = 'text'; eye.textContent = '🙈'; }
-    else { input.type = 'password'; eye.textContent = '👁️'; }
+    input.type = input.type==='password'?'text':'password';
+    eye.textContent = input.type==='text'?'🙈':'👁️';
   }
-
   function checkLogin(){
     const u = document.getElementById('usernameInput').value.trim().toLowerCase();
     const p = document.getElementById('passwordInput').value.trim();
     const err = document.getElementById('loginError');
-    if(!u ||!p){ err.textContent="Please enter account name and password"; err.style.display='block'; return; }
-    if(u === DASHBOARD_NAME && p === DASHBOARD_PASSWORD){
+    if(!u||!p){err.textContent="Enter username & password"; err.style.display='block'; return;}
+    if(u===DASHBOARD_NAME && p===DASHBOARD_PASSWORD){
       err.style.display='none';
       document.getElementById('loginOverlay').style.display='none';
       document.getElementById('mainContainer').style.display='block';
-      document.getElementById('displayUser').textContent = u;
-      initMQTT();
-    } else {
-      err.textContent="Invalid account name or password";
-      err.style.display='block';
-    }
+      document.getElementById('displayUser').textContent=u;
+      initConnections();
+    } else { err.textContent="Invalid account"; err.style.display='block'; }
   }
-
-  function logout(){
-    if(client) { client.end(true); client = null; }
-    document.getElementById('mainContainer').style.display='none';
-    document.getElementById('loginOverlay').style.display='flex';
-    document.getElementById('usernameInput').value='';
-    document.getElementById('passwordInput').value='';
-    document.getElementById('passwordInput').type='password';
-    document.getElementById('toggleEye').textContent='👁️';
-  }
+  function logout(){ location.reload(); }
 
   document.getElementById('passwordInput')?.addEventListener('keypress', e=>{ if(e.key==='Enter') checkLogin(); });
   document.getElementById('usernameInput')?.addEventListener('keypress', e=>{ if(e.key==='Enter') checkLogin(); });
 
   const state = {};
+  let client=null, wsSocket=null;
   const customersDiv = document.getElementById('customers');
   const connStatus = document.getElementById('connStatus');
-  let client;
+  const srcStatus = document.getElementById('srcStatus');
 
-  function isAnyNodeOnline(){
-    return Object.values(state).some(s => (Date.now() - (s.lastSeen || 0)) < 20000);
-  }
+  function isOnline(s){ return (Date.now() - (s.lastSeen||0)) < 25000; }
 
   function updateEmptyState(){
-    const emptyEl = document.getElementById('emptyMsg');
-    if(!emptyEl) return;
-    const hasNodes = Object.keys(state).length > 0;
-    const hasOnline = isAnyNodeOnline();
+    const el=document.getElementById('emptyMsg');
+    if(!el) return;
+    const hasOnline = Object.values(state).some(isOnline);
+    el.style.display = hasOnline? 'none' : 'block';
+  }
 
-    // REQUIREMENT: when nodes are connected -> hide waiting message
-    // when nodes not there -> say waiting for nodes to come online
-    if(!hasNodes ||!hasOnline){
-      emptyEl.style.display = 'block';
-      emptyEl.innerHTML = `⏳ Waiting for nodes to come online...<br><span style="font-size:13px; color:#64748b;">No active nodes detected. Publishing to irrigation/data/[id]</span>`;
+  function initConnections(){
+    // If served from ESP32 (IP 192.168.x.x), use local WebSocket first
+    const isLocal = location.hostname!== "" && location.hostname!== "broker.hivemq.com" &&!location.hostname.includes("github");
+    if(isLocal){
+      initWS();
+      srcStatus.textContent="Source: Local Gateway WS + MQTT";
     } else {
-      emptyEl.style.display = 'none';
+      srcStatus.textContent="Source: HiveMQ Cloud MQTT";
+      initMQTT();
     }
+    // Always also try MQTT as backup
+    if(isLocal) setTimeout(initMQTT, 1000);
+  }
+
+  function initWS(){
+    const proto = location.protocol==='https:'?'wss://':'ws://';
+    const wsUrl = proto + location.host + '/ws';
+    wsSocket = new WebSocket(wsUrl);
+    wsSocket.onopen = ()=>{ connStatus.textContent='GATEWAY: Connected'; connStatus.className='status connected'; };
+    wsSocket.onclose = ()=>{ connStatus.textContent='GATEWAY: Disconnected'; connStatus.className='status disconnected'; setTimeout(initWS, 3000); };
+    wsSocket.onmessage = (ev)=>{
+      try{
+        const data = JSON.parse(ev.data);
+        if(data.type==='heartbeat' && data.mqtt!=null){ /* optional */ return; }
+        handleIncoming(data);
+      }catch(e){}
+    };
   }
 
   function initMQTT(){
-    if(client) return;
+    if(client && client.connected) return;
     client = mqtt.connect(BROKER, { clientId: 'dashboard_'+Math.random().toString(16).substr(2,8), clean:true, reconnectPeriod:5000 });
-    client.on('connect', ()=>{ connStatus.textContent='MQTT: Connected'; connStatus.className='status connected'; client.subscribe(TOPIC_DATA); });
-    client.on('reconnect', ()=>{ connStatus.textContent='Reconnecting...'; connStatus.className='status disconnected'; });
-    client.on('error', ()=>{ connStatus.textContent='Error'; connStatus.className='status disconnected'; });
-    client.on('message', (topic, payload)=>{
-      try{
-        const data = JSON.parse(payload.toString());
-        const id = data.id; if(!id) return;
-        if(!state[id]){ state[id]={}; createCustomerCard(id); }
-        state[id]={...state[id],...data, lastSeen: Date.now()};
-        updateUI(id);
-      }catch(e){ console.error(e); }
+    client.on('connect', ()=>{
+      if(!wsSocket || wsSocket.readyState!==1) { connStatus.textContent='MQTT: Connected'; connStatus.className='status connected'; }
+      client.subscribe(TOPIC_DATA);
     });
+    client.on('message', (topic, payload)=>{
+      try{ handleIncoming(JSON.parse(payload.toString())); }catch(e){}
+    });
+  }
+
+  function handleIncoming(data){
+    const id = data.id; if(!id) return;
+    if(!state[id]) createCustomerCard(id);
+
+    // Normalize fields from MASTER: master sends m1,m2,rate,litres,valve as string/open/closed
+    let valveNorm = 0;
+    if(data.valve!==undefined){
+      if(typeof data.valve==='string') valveNorm = (data.valve.toLowerCase()==='open'||data.valve==='1')?1:0;
+      else valveNorm = data.valve?1:0;
+    }
+    if(data.valveStatus) valveNorm = (data.valveStatus==='open')?1:0;
+
+    const normalized = {
+      id: id,
+      temp: data.temp?? data.t,
+      hum: data.hum?? data.h,
+      moist1: data.moist1?? data.m1?? data.soil1,
+      moist2: data.moist2?? data.m2?? data.soil2,
+      flow: data.flow?? data.rate?? data.flowRate,
+      total: data.total?? data.litres?? data.liters,
+      rssi: data.rssi,
+      valve: valveNorm,
+      lastSeen: Date.now()
+    };
+    state[id] = {...state[id],...normalized};
+    updateUI(id);
   }
 
   function createCustomerCard(id){
@@ -188,39 +212,41 @@
         <h2>Node ${id} <span class="badge offline" id="status-${id}">OFFLINE</span></h2>
         <div class="valve-status closed" id="valve-${id}">CLOSED</div>
         <div class="sensor-grid">
-          <div class="sensor"><div class="label">DHT22 Temp</div><div class="value" id="temp-${id}">--</div><div class="unit">°C</div></div>
-          <div class="sensor"><div class="label">DHT22 Humidity</div><div class="value" id="hum-${id}">--</div><div class="unit">%</div></div>
-          <div class="sensor"><div class="label">Moisture 1</div><div class="value" id="moist1-${id}">--</div><div class="unit">%</div></div>
-          <div class="sensor"><div class="label">Moisture 2</div><div class="value" id="moist2-${id}">--</div><div class="unit">%</div></div>
-          <div class="sensor"><div class="label">Flow Rate</div><div class="value" id="flow-${id}">--</div><div class="unit">L/min</div></div>
-          <div class="sensor"><div class="label">Total Water</div><div class="value" id="total-${id}">--</div><div class="unit">Liters</div></div>
+          <div class="sensor"><span class="label">DHT22 Temp</span><div class="value" id="temp-${id}">--</div><span class="unit">°C</span></div>
+          <div class="sensor"><span class="label">DHT22 Humidity</span><div class="value" id="hum-${id}">--</div><span class="unit">%</span></div>
+          <div class="sensor"><span class="label">Moisture 1 (GPIO34)</span><div class="value" id="moist1-${id}">--</div><span class="unit">%</span></div>
+          <div class="sensor"><span class="label">Moisture 2 (GPIO35)</span><div class="value" id="moist2-${id}">--</div><span class="unit">%</span></div>
+          <div class="sensor"><span class="label">Flow Rate</span><div class="value" id="flow-${id}">--</div><span class="unit">L/min</span></div>
+          <div class="sensor"><span class="label">Total Water</span><div class="value" id="total-${id}">--</div><span class="unit">Liters</span></div>
         </div>
         <div class="controls">
           <h3>Valve Control</h3>
           <div class="btn-group">
-            <button class="btn-open" id="btn-open-${id}" onclick="sendCmd(${id}, 'open')">Open Valve</button>
-            <button class="btn-close active" id="btn-close-${id}" onclick="sendCmd(${id}, 'close')">Close Valve</button>
-            <button class="btn-auto" id="auto-${id}" onclick="toggleAuto(${id})">Auto: OFF</button>
+            <button class="btn-open" id="btn-open-${id}" onclick="sendCmd('${id}', 'open')">Open Valve</button>
+            <button class="btn-close active" id="btn-close-${id}" onclick="sendCmd('${id}', 'close')">Close Valve</button>
+            <button class="btn-auto" id="auto-${id}" onclick="toggleAuto('${id}')">Auto: OFF</button>
           </div>
         <div class="meta"><span>RSSI: <span id="rssi-${id}">--</span> dBm</span><span>Updated: <span id="last-${id}">Never</span></span></div>
       </div>
     `);
-    updateEmptyState();
   }
 
   function sendCmd(id, action){
-    if(!client ||!client.connected){ alert('MQTT not connected'); return; }
+    // Instant UI
+    if(!state[id]) state[id]={lastSeen:Date.now()};
+    state[id].valve = (action==='open')?1:0;
+    updateUI(id);
 
-    // INSTANT UI CHANGE - Requirement: green when open pressed, red when close pressed
-    if(!state[id]) state[id] = { lastSeen: Date.now() };
-    if(action === 'open') {
-      state[id].valve = 1;
-    } else if(action === 'close') {
-      state[id].valve = 0;
+    const payload = JSON.stringify({ id: parseInt(id), cmd: action, action: action, ts: Date.now() });
+
+    // 1. Via local WebSocket to Master (Master will forward to LoRa)
+    if(wsSocket && wsSocket.readyState===1){
+      wsSocket.send(payload);
     }
-    updateUI(id); // update immediately
-
-    client.publish(TOPIC_CMD, JSON.stringify({ id: id, cmd: action, ts: Date.now() }));
+    // 2. Via MQTT for remote access
+    if(client && client.connected){
+      client.publish(TOPIC_CMD, payload);
+    }
   }
 
   function toggleAuto(id){
@@ -229,52 +255,44 @@
     const btn = document.getElementById(`auto-${id}`);
     btn.textContent = state[id].auto? 'Auto: ON' : 'Auto: OFF';
     btn.className = state[id].auto? 'btn-auto active' : 'btn-auto';
-    if(client && client.connected){
-      client.publish(TOPIC_CMD, JSON.stringify({ id: id, cmd: 'auto', value: state[id].auto?1:0 }));
-    }
+    const payload = JSON.stringify({ id: parseInt(id), cmd: 'auto', value: state[id].auto?1:0 });
+    if(wsSocket && wsSocket.readyState===1) wsSocket.send(payload);
+    if(client && client.connected) client.publish(TOPIC_CMD, payload);
   }
 
   function updateUI(id){
-    const s = state[id]; if(!s ||!document.getElementById(`customer-${id}`)) return;
-    const online = Date.now() - (s.lastSeen||0) < 20000;
-
+    const s = state[id]; if(!s) return;
+    const el = document.getElementById(`customer-${id}`); if(!el) return;
+    const online = isOnline(s);
     document.getElementById(`status-${id}`).textContent = online?'ONLINE':'OFFLINE';
     document.getElementById(`status-${id}`).className = online?'badge online':'badge offline';
 
-    const card = document.getElementById(`customer-${id}`);
     const valveEl = document.getElementById(`valve-${id}`);
     const btnOpen = document.getElementById(`btn-open-${id}`);
     const btnClose = document.getElementById(`btn-close-${id}`);
 
     if(s.valve===1){
-      card.className='card valve-open';
-      valveEl.textContent='OPEN';
-      valveEl.className='valve-status open';
+      el.className='card valve-open';
+      valveEl.textContent='OPEN'; valveEl.className='valve-status open';
       if(btnOpen) btnOpen.className='btn-open active';
       if(btnClose) btnClose.className='btn-close';
     } else {
-      card.className='card valve-closed';
-      valveEl.textContent='CLOSED';
-      valveEl.className='valve-status closed';
+      el.className='card valve-closed';
+      valveEl.textContent='CLOSED'; valveEl.className='valve-status closed';
       if(btnOpen) btnOpen.className='btn-open';
       if(btnClose) btnClose.className='btn-close active';
     }
-
-    document.getElementById(`temp-${id}`).textContent = s.temp?.toFixed(1)??'--';
-    document.getElementById(`hum-${id}`).textContent = s.hum?.toFixed(0)??'--';
-    document.getElementById(`moist1-${id}`).textContent = s.moist1?.toFixed(0)??'--';
-    document.getElementById(`moist2-${id}`).textContent = s.moist2?.toFixed(0)??'--';
-    document.getElementById(`flow-${id}`).textContent = s.flow?.toFixed(2)??'--';
-    document.getElementById(`total-${id}`).textContent = s.total?.toFixed(1)??'--';
-    document.getElementById(`rssi-${id}`).textContent = s.rssi??'--';
-    document.getElementById(`last-${id}`).textContent = s.lastSeen? new Date(s.lastSeen).toLocaleTimeString() : 'Never';
-
+    if(s.temp!=null) document.getElementById(`temp-${id}`).textContent = parseFloat(s.temp).toFixed(1);
+    if(s.hum!=null) document.getElementById(`hum-${id}`).textContent = parseFloat(s.hum).toFixed(0);
+    if(s.moist1!=null) document.getElementById(`moist1-${id}`).textContent = parseInt(s.moist1);
+    if(s.moist2!=null) document.getElementById(`moist2-${id}`).textContent = parseInt(s.moist2);
+    if(s.flow!=null) document.getElementById(`flow-${id}`).textContent = parseFloat(s.flow).toFixed(2);
+    if(s.total!=null) document.getElementById(`total-${id}`).textContent = parseFloat(s.total).toFixed(1);
+    if(s.rssi!=null) document.getElementById(`rssi-${id}`).textContent = s.rssi;
+    document.getElementById(`last-${id}`).textContent = new Date(s.lastSeen).toLocaleTimeString();
     updateEmptyState();
   }
-
-  setInterval(()=>{ Object.keys(state).forEach(id=>updateUI(id)); updateEmptyState(); },2000);
-  // initial check
-  updateEmptyState();
+  setInterval(()=>{ Object.keys(state).forEach(updateUI); }, 2000);
 </script>
 </body>
 </html>
