@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaSense - Smart Irrigation Control</title>
+  <title>AquaSense - AQUASENSE DISTRIBUTION SYSTEM</title>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,7 +61,7 @@
   <div id="loginOverlay">
     <div class="login-box">
       <h2 style="letter-spacing:1px;">AQUASENSE</h2>
-      <p>Smart Irrigation System | LoRa Master</p>
+      <p>Aquasense Distribution System | LoRa Master</p>
       <div class="input-group"><input type="text" id="usernameInput" placeholder="Account Name" /></div>
       <div class="input-group">
         <div class="password-wrap">
@@ -76,7 +76,7 @@
 
   <div class="container" id="mainContainer" style="display:none;">
     <h1>AquaSense</h1>
-    <div class="subtitle">Smart Irrigation System | LoRa Master → Auto Nodes</div>
+    <div class="subtitle">Aquasense Distribution System  | LoRa Master → Auto Nodes</div>
     <div class="header-bar">
       <div class="user-info">Logged in as: <strong id="displayUser">aquasense</strong></div>
       <div style="display:flex; gap:10px; align-items:center;">
@@ -95,7 +95,7 @@
   const TOPIC_CMD = 'irrigation/cmd';
   const TOPIC_DATA = 'irrigation/data/+';
   const DASHBOARD_NAME = "aquasense";
-  const DASHBOARD_PASSWORD = "irrigation2026";
+  const DASHBOARD_PASSWORD = "distribution2026";
 
   function togglePassword(){
     const input = document.getElementById('passwordInput');
